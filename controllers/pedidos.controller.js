@@ -128,7 +128,7 @@ const aceptarPedido = async (req, res) => {
                     return res.status(400).json({ message: "El pedido no está en estado pendiente" });
                 }
                 pedido.estado = 'aceptado';
-                await PedidosService.updatePedido(pedido);....
+                await PedidosService.updatePedido(pedido);
                 res.status(200).json({ message: "Pedido aceptado correctamente" });
         
             } catch (error) {

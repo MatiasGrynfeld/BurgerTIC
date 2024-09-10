@@ -1,6 +1,7 @@
 import UsuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+const saltRounds = 10;
 
 const register = async (req, res) => {
     // --------------- COMPLETAR ---------------
@@ -18,6 +19,29 @@ const register = async (req, res) => {
             8. Devolver un mensaje de error si algo falló guardando al usuario (status 500)
         
     */
+    const { usuario } = req.body.params;
+    if (!usuario){
+        res.status(400).json({message: "Se necesita un usurio"})
+    }
+    const { nombre, apellido, email, password } = usuario;
+    if (!nombre || !apellido || !email || !password){
+        res.status(400).json({message: "Faltan campos por llenar"})
+    }
+    const usuarioExistente = await UsuariosService.getUsuarioByEmail(email);
+    if (usuarioExistente){
+        res.status(400).json({message: "Ya existe un usuario con ese email"})
+    }
+    else{
+        try{
+            const hashPassword = await bcrypt.hash(password, saltRounds);
+            usuario.password = hashPassword;
+            await UsuariosService.createUsuario(usuario);
+            res.status(201).json({message: "Usuario creado correctamente"})
+        }
+        catch(error){
+            res.status(500).json({message: error.message})
+        }
+    }
 };
 
 const login = async (req, res) => {
@@ -36,6 +60,29 @@ const login = async (req, res) => {
             8. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    const { email, password } = req.body.params;
+    if (!email || !password){
+        res.status(400).json({message: "Se necesita un email y una contraseña"})
+    }
+    usuario = await UsuariosService.getUsuarioByEmail(email);
+    if (!usuario){
+        res.status(400).json({message: "Ningún usuario registrado con ese email"})
+    }
+    const passwordCorrecto = await bcrypt.compare(password, usuario.password);
+    if (!passwordCorrecto){
+        res.status(400).json({message: "Contraseña incorrecta"})
+    }
+    try{
+        const token = jwt.sign(
+            { id: usuario.id },
+            process.env.SECRET,
+            { expiresIn: "1h" }
+        );
+        res.status(200).json({}) // devolver usuario y token?
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
 };
 
 export default { register, login };
