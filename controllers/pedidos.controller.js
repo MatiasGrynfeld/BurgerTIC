@@ -9,14 +9,14 @@ const getPedidos = async (req, res) => {
             2. Devolver un json con los pedidos (status 200)
             3. Devolver un mensaje de error si algo falló (status 500)
         
-    */ try {
+    */ 
+    try {
         const pedidos = await PedidosService.getPedidos();
         res.json(pedidos);
-    } catch (error) {
+    } 
+    catch (error) {
         res.status(500).json({ message: error.message });
     }
-
-
 };
 
 const getPedidosByUser = async (req, res) => {
