@@ -15,7 +15,20 @@ export const verifyToken = async (req, res, next) => {
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
     try{
-        
+        const authorizationHeader = req.headers.authorizationHeader;
+        if(!authorizationHeader){
+            res.status(401).send({error: "Unauthorized"});
+        }
+        const {type, token} = authorizationHeader.split(" ");
+        if(type !== "Bearer"){
+            res.status(401).send({error: "Unauthorized"});
+        }
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        if(!payload.user_id){
+            res.status(401).send({error: "Unauthorized"});
+        }
+        req.user_id = payload.user_id;
+        next();
     }
     catch(error){
         res.status(401).send({error: "Unauthorized"});
@@ -32,4 +45,17 @@ export const verifyAdmin = async (req, res, next) => {
             2. Si no lo es, devolver un error 403 (Forbidden)
     
     */
+    try{
+        const id_usuario = req.user_id;
+        const usuario = await UsuariosService.getUsuarioById(id_usuario);
+        if(usuario.admin === true){
+            next();
+        }
+        else{
+            res.status(403).send({error: "Forbidden"});
+        }
+    }
+    catch(error){
+        res.status(403).send({error: "Forbidden"});
+    }
 };
