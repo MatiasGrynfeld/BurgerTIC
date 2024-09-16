@@ -152,7 +152,7 @@ const createPedido = async (idUsuario, platos) => {
                     "DELETE FROM pedidos_platos WHERE id_pedido = $1",
                     [idPedido]
                 );
-                throw new Error("Plato no encontrado");
+                res.status(500).send("Plato no encontrado");
             }
 
             await client.query(
