@@ -1,6 +1,6 @@
 # BurgerTIC
 
-En este trabajo práctico realizaremos una REST API para un restaurant de comida rápida "**BurgerTIC**". Utilizaremos `express` ([cheatsheet](https://cheatsheets-nv.vercel.app/cheatsheet/express)), `postgress` ([cheatsheet](https://cheatsheets-nv.vercel.app/cheatsheet/postgres)), `jwt` y `bcryptjs`.
+En este trabajo práctico realizaremos una REST API para un restaurant de comida rápida "**BurgerTIC**". Utilizaremos `express` ([cheatsheet](https://cheatsheets-nv.vercel.app/cheatsheet/express)), `postgres` ([cheatsheet](https://cheatsheets-nv.vercel.app/cheatsheet/postgres)), `jwt` y `bcryptjs`.
 
 ## Grupos
 
@@ -111,7 +111,7 @@ Esta sección de la API ya se encuentra completamente implementada en el _boiler
 
 **Obs. 2**: El campo `password` debe ser hasheado antes de ser almacenado en la base de datos. Para esto, se debe utilizar `bcrypt`. Al autenticar un usuario, se debe comparar el password enviado con el password hasheado almacenado en la base de datos. Si no coinciden, se debe devolver un error.
 
-**Obs. 3**: Al autenticar un usuario, se debe devolver un token `jwt` de autenticación. Este token debe ser enviado en el header `Authorization` de las rutas protegidas. El token debe tener una duración de 30 minutos. Si el token expira, se debe devolver un error 401.
+**Obs. 3**: Al autenticar un usuario, se debe devolver un token `jwt` de autenticación. Este token debe ser enviado en el header `Authorization` de las rutas protegidas. El token debe tener una duración de 30 minutos. Si el token expira, se debe devolver un error 401. El formato del payload token será: `{ id: <id_del_usuario> }`.
 
 **Obs. 4**: La ruta `/register` no debe estar protegida por autenticación. La ruta `/login` tampoco, obviamente.
 

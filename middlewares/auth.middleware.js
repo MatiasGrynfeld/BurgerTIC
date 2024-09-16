@@ -24,10 +24,10 @@ export const verifyToken = async (req, res, next) => {
             res.status(401).send({error: "Unauthorized"});
         }
         const payload = jwt.verify(token, process.env.JWT_SECRET);
-        if(!payload.user_id){
+        if(!payload.id){
             res.status(401).send({error: "Unauthorized"});
         }
-        req.user_id = payload.user_id;
+        req.id = payload.id;
         next();
     }
     catch(error){
@@ -46,7 +46,7 @@ export const verifyAdmin = async (req, res, next) => {
     
     */
     try{
-        const id_usuario = req.user_id;
+        const id_usuario = req.id;
         const usuario = await UsuariosService.getUsuarioById(id_usuario);
         if(usuario.admin === true){
             next();
