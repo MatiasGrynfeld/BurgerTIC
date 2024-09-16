@@ -1,0 +1,55 @@
+### Obtener todos los pedidos (Admin)
+GET http://localhost:3000/pedidos
+Authorization: Bearer {{token}}
+
+###
+
+### Obtener pedidos del usuario autenticado
+GET http://localhost:3000/pedidos/usuario
+Authorization: Bearer {{token}}
+
+###
+
+### Crear un nuevo pedido (Usuario autenticado)
+POST http://localhost:3000/pedidos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "platos": [
+    {
+        "id": 1,
+        "cantidad": 2
+    },
+    {
+        "id": 2,
+        "cantidad": 1
+    }
+    ]
+}
+
+###
+
+### Aceptar pedido (Admin)
+PUT http://localhost:3000/pedidos/1/aceptar
+Authorization: Bearer {{token}}
+
+###
+
+### Comenzar pedido (Admin)
+PUT http://localhost:3000/pedidos/1/comenzar
+Authorization: Bearer {{token}}
+
+###
+
+### Entregar pedido (Admin)
+PUT http://localhost:3000/pedidos/1/entregar
+Authorization: Bearer {{token}}
+
+###
+
+### Eliminar un pedido (Admin)
+DELETE http://localhost:3000/pedidos/1
+Authorization: Bearer {{token}}
+
+###
