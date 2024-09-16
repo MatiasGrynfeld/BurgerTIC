@@ -110,7 +110,7 @@ const createPedido = async (req, res) => {
             }
             try {
                 const id = req.id;
-                await PedidosService.createPedido(id, pedido);
+                await PedidosService.createPedido(id, pedido.platos);
                 res.status(201).json({ message: "Pedido creado con éxito" });
             } catch (error) {
                 res.status(500).json({ message: error.message });
