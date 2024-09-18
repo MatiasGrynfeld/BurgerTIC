@@ -15,23 +15,25 @@ export const verifyToken = async (req, res, next) => {
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
     try{
-        const authorizationHeader = req.headers.authorizationHeader;
+        const authorizationHeader = req.headers.authorization;
         if(!authorizationHeader){
-            res.status(401).send({error: "Unauthorized"});
+            return res.status(401).send({error: "Unauthorized"});
         }
-        const {type, token} = authorizationHeader.split(" ");
+        const parts = authorizationHeader.split(" ");
+        const type = parts[0]
+        const token = parts[1]
         if(type !== "Bearer"){
-            res.status(401).send({error: "Unauthorized"});
+            return res.status(401).send({error: "Unauthorized"});
         }
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const payload = jwt.verify(token, process.env.SECRET);
         if(!payload.id){
-            res.status(401).send({error: "Unauthorized"});
+            return res.status(401).send({error: "Unauthorized"});
         }
         req.id = payload.id;
         next();
     }
     catch(error){
-        res.status(401).send({error: "Unauthorized"});
+        return res.status(401).send({error: "Unauthorized"});
     }
 };
 
@@ -52,10 +54,10 @@ export const verifyAdmin = async (req, res, next) => {
             next();
         }
         else{
-            res.status(403).send({error: "Forbidden"});
+            return res.status(403).send({error: "Forbidden"});
         }
     }
     catch(error){
-        res.status(403).send({error: "Forbidden"});
+        return res.status(403).send({error: "Forbidden"});
     }
 };

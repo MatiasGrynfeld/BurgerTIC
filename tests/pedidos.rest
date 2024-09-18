@@ -1,21 +1,29 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI2NjY1NjM3LCJleHAiOjE3MjY2Njc0Mzd9.9WCg1czgH9ZPmY8_TlykId0vyyE3IwKw2Qvpt0ntz1E
 ### Obtener todos los pedidos (Admin)
-GET http://localhost:3000/pedidos
+GET http://localhost:9000/pedidos
 Authorization: Bearer {{token}}
 
 ###
 
 ### Obtener pedidos del usuario autenticado
-GET http://localhost:3000/pedidos/usuario
+GET http://localhost:9000/pedidos/usuario
+Authorization: Bearer {{token}}
+
+###
+
+### Obtener pedido por id
+GET http://localhost:9000/pedidos/2
 Authorization: Bearer {{token}}
 
 ###
 
 ### Crear un nuevo pedido (Usuario autenticado)
-POST http://localhost:3000/pedidos
+POST http://localhost:9000/pedidos
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
+    
     "platos": [
     {
         "id": 1,
@@ -31,25 +39,25 @@ Content-Type: application/json
 ###
 
 ### Aceptar pedido (Admin)
-PUT http://localhost:3000/pedidos/1/aceptar
+PUT http://localhost:9000/pedidos/1/aceptar
 Authorization: Bearer {{token}}
 
 ###
 
 ### Comenzar pedido (Admin)
-PUT http://localhost:3000/pedidos/1/comenzar
+PUT http://localhost:9000/pedidos/1/comenzar
 Authorization: Bearer {{token}}
 
 ###
 
 ### Entregar pedido (Admin)
-PUT http://localhost:3000/pedidos/1/entregar
+PUT http://localhost:9000/pedidos/1/entregar
 Authorization: Bearer {{token}}
 
 ###
 
 ### Eliminar un pedido (Admin)
-DELETE http://localhost:3000/pedidos/1
+DELETE http://localhost:9000/pedidos/1
 Authorization: Bearer {{token}}
 
 ###
