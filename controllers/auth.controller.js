@@ -19,11 +19,7 @@ const register = async (req, res) => {
             8. Devolver un mensaje de error si algo falló guardando al usuario (status 500)
         
     */
-    const { usuario } = req.body;
-    if (!usuario){
-        return res.status(400).json({message: "Se necesita un usurio"})
-    }
-    const { nombre, apellido, email, password } = usuario;
+    let { nombre, apellido, email, password } = req.body;
     if (!nombre || !apellido || !email || !password){
         return res.status(400).json({message: "Faltan campos por llenar"})
     }
@@ -34,8 +30,8 @@ const register = async (req, res) => {
     else{
         try{
             const hashPassword = await bcrypt.hash(password, saltRounds);
-            usuario.password = hashPassword;
-            await UsuariosService.createUsuario(usuario);
+            password = hashPassword;
+            await UsuariosService.createUsuario({nombre:nombre,  apellido: apellido, email: email, password: password});
             return res.status(201).json({message: "Usuario creado correctamente"})
         }
         catch(error){

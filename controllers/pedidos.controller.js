@@ -31,7 +31,7 @@ const getPedidosByUser = async (req, res) => {
         
     */
             try {
-                const { id } = req.id;    
+                const id = req.id;
                 const pedidos = await PedidosService.getPedidosByUser(id);
                 if (!pedidos){
                     return res.status(200).json([]);
