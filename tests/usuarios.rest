@@ -1,0 +1,10 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI3MDk3NzU5LCJleHAiOjE3MjcwOTk1NTl9.mqJQbV6mZd8IRmkYOvPpXoOID30brPmDBTGQyI0PrhA
+
+### make admin route
+POST http://localhost:9000/usuarios/makeadmin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 4
+}

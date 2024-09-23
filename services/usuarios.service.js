@@ -58,4 +58,19 @@ const createUsuario = async (usuario) => {
     }
 };
 
-export default { getUsuarioByEmail, getUsuarioById, createUsuario };
+const makeUserAdmin = async (id) => {
+    const client = new Client(config);
+    await client.connect();
+    try{
+        const { rows } = await client.query(
+            "UPDATE Usuarios SET admin=true WHERE id=$1", [id]
+        );
+        await client.end();
+        return rows;
+    }catch (error) {
+        await client.end();
+        throw error;
+    }
+};
+
+export default { getUsuarioByEmail, getUsuarioById, createUsuario, makeUserAdmin};
